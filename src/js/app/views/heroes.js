@@ -13,19 +13,37 @@ define(function (require) {
 
 	//TODO: make this work with dynamic data
 		initialize: function () {
-			var heroesJson = $.getJSON( "../../data/heroes.json", function( data ) {
-			var filteredData = _.pick(data, function(value, key, object) {
-				return (key.indexOf('npc_dota_hero') !== -1);
-			  });
-			var heroesList = [_.values(filteredData)];
-			  console.log(heroesList);
+			var me = this;
+		    $.getJSON( "../../data/heroes.json", function( data ) {
+				var filteredData = _.pick(data, function(value, key, object) {
+					return (key.indexOf('npc_dota_hero') !== -1);
+				});
+				me.setCollection(_.values(filteredData));
 			});
-            this.heroesList = new models.HeroCollection();
-			this.heroesList.fetch();
         },
 		
+		setCollection: function(data) {
+			console.log(data);
+            this.heroesCollection = new models.HeroCollection(data);
+			this.render();
+		},
+
         render: function () {
             this.$el.html(template());
+			//TODO: backbonify this .. jquerying it for now
+			if(this.heroesCollection != null) {
+				this.heroesCollection.each(function(hero) { // iterate through the collection
+					var heroesListView = $('.heroesList');
+					if(hero.has('url')) {
+						var repl = /_/gi;
+						heroesListView.append("<tr><td>" + hero.get('url').replace(repl, ' ') + "</td>" +
+						"<td>" + hero.get('Role') + "</td>" +
+						"<td>" + hero.get('Team') + "</td></tr>");
+					}
+					//var contactView = new ContactView({model: contact}); 
+					//self.$el.append(contactView.el);
+				});
+			}
             return this;
         }
 

@@ -11,13 +11,23 @@ define(function (require) {
   
   return Backbone.Router.extend({
 	routes: {
-            "": "home"
+            "": "home",
+			"heroes": "heroes"
 	},
 	
 	 home: function () {
 		console.log("Congratulations! You've fuckin' made it home.");
 		homeView.delegateEvents(); // delegate events when the view is recycled
         homeView.render();
+	 },//,
+	 
+	 heroes: function() {
+        require(["app/views/heroes"], function (HeroesView) {
+	      console.log("I'm supposed to show 'em fuckin heroes");
+		  var $container = $('#content');
+          var view = new HeroesView({el: $container});
+          view.render();
+		});
 	 }
   });
   

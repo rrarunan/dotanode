@@ -7,6 +7,9 @@ define(function (require) {
         Backbone    = require('backbone/backbone');
 
 	var Hero = Backbone.Model.extend({
+	  defaults: {
+		'Role': 'N/A'
+	  },
 	  urlRoot: "http://localhost:8000/heroes"
 	});
 	

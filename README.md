@@ -3,7 +3,7 @@ dotanode
 
 # DOTA experiments with nodeJS
 
-![Heroes List Screenshot](screens/heroes_list.png "Heroes List")
+![Heroes List Screenshot](screens/heroes_list.PNG "Heroes List")
 
 * Text Parser (to convert npc_heroes.txt to JSON)
 * [TODO] Initial sync tasks to sync images/data from DOTA2 VPK directory

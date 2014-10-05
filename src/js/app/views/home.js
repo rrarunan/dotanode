@@ -1,21 +1,21 @@
 define(function (require) {
 
-    "use strict";
+	"use strict";
 
-    var $                   = require('jquery'),
-        _                   = require('underscore/underscore'),
-        Backbone            = require('backbone/backbone'),
-        tpl                 = require('text/text!tpl/Home.html'),
+	var $ = require('jquery'),
+	_ = require('underscore/underscore'),
+	Backbone = require('backbone/backbone'),
+	tpl = require('text/text!tpl/Home.html'),
 
-        template = _.template(tpl);
+	template = _.template(tpl);
 
-    return Backbone.View.extend({
+	return Backbone.View.extend({
 
-        render: function () {
-            this.$el.html(template());
-            return this;
-        }
+		render : function () {
+			this.$el.html(template());
+			return this;
+		}
 
-    });
+	});
 
 });

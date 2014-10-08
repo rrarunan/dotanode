@@ -87,8 +87,7 @@ define(function (require) {
 						//console.log("Loading minihero image: " + heroName.toLowerCase() + ".png");
 						var repl = /_/gi;
 						heroesListView.append("<tr><td><img src='assets/images/miniheroes/" + heroImg + ".png'></img>" + heroName.replace(repl, ' ') + "</td>" +
-							"<td>" + hero.get('Role') + "</td>" +
-							"<td>" + hero.get('Team') + "</td></tr>");
+							"<td>" + hero.get('Role') + "</td></tr>");
 					}
 					//var contactView = new ContactView({model: contact});
 					//self.$el.append(contactView.el);

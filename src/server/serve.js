@@ -1,28 +1,26 @@
 var connect = require('connect');
 var http = require('http');
 
+var apiKey = "";
+
+// print process.argv
+// steam API key will be passed in as commandline variable
+process.argv.forEach(function (val, index, array) {
+	console.log(index + ': ' + val);
+	if (index > 1) {
+		apiKey = array[2];
+		console.log(apiKey);
+	}
+});
+
+// connect server
 var app = connect();
-
-// gzip/deflate outgoing responses
-var compression = require('compression');
-app.use(compression());
-
-// store session state in browser cookie
-var cookieSession = require('cookie-session');
-app.use(cookieSession({
-		keys : ['secret1', 'secret2']
-	}));
 
 // parse urlencoded request bodies into req.body
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({
 		extended : true
 	}));
-
-// respond to all requests
-//app.use(function(req, res){
-//  res.end('Hello from Connect!\n');
-//})
 
 var header = require('connect-header');
 app.use(header({
@@ -31,26 +29,68 @@ app.use(header({
 
 var urlrouter = require('urlrouter');
 app.use(urlrouter(function (app) {
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// local utility APIs
 		app.get('/', function (req, res, next) {
-			res.end('hello urlrouter');
-		});
-		app.get('/user/:id([0-9]+)', function (req, res, next) {
-			res.end('hello user ' + req.params.id);
+			res.end('Steam Collector for Node. Just a utility to collect data from Steam for some experiments with DOTA data.');
 		});
 		app.get('/heroes', function (req, res, next) {
 			var heroesJson = require('../data/heroes');
 			res.end(JSON.stringify(heroesJson));
 		});
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// live Steam server APIs
+		// get matches for a given user ID
+		//TODO: enhance to take more parameters
+		app.get('/matches/:userId([0-9]+)', function (req, res, next) {
+
+			var responseBody = "";
+
+			var getResponse = function (resp) {
+				console.log("Got response: " + resp.statusCode);
+				var body = "";
+				resp.on('data', function (chunk) {
+					body += chunk;
+					responseBody += chunk;
+					//console.log('BODY: ' + chunk);
+				});
+
+				resp.on('end', function () {
+					//res.writeHead(200, "OK", {'Content-Type': 'text/html'});
+					responseObj = JSON.parse(responseBody)
+						//console.log("Got response: ", responseObj);
+						//console.log(responseBody);
+						res.end(responseBody);
+				});
+			};
+			console.log("req params:" + JSON.stringify(req.params));
+			http.get("http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v1?key=" + apiKey + "&account_id=" + req.params.userId, getResponse);
+
+		});
+		// get individual match details
+		app.get('/matchdetails/:matchId([0-9]+)', function (req, res, next) {
+			var responseBody = "";
+
+			var getResponse = function (resp) {
+				console.log("Got response: " + resp.statusCode);
+				var body = "";
+				resp.on('data', function (chunk) {
+					body += chunk;
+					responseBody += chunk;
+				});
+
+				resp.on('end', function () {
+					//res.writeHead(200, "OK", {'Content-Type': 'text/html'});
+					responseObj = JSON.parse(responseBody)
+						res.end(responseBody);
+				});
+			};
+			console.log("req params:" + JSON.stringify(req.params));
+			http.get("http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1?key=" + apiKey + "&match_id=" + req.params.matchId, getResponse);
+		});
 	}));
 
 //create node.js http server and listen on port
 http.createServer(app).listen(8000);
-
-//http.get("http://api.steampowered.com/IEconDOTA2_570/GetHeroes/v1?key=42E379CD222A1D2B33E92A1E1816C2C6", function(res) {
-//  console.log("Got response: " + res.statusCode);
-//  res.on('data', function (chunk) {
-//    console.log('BODY: ' + chunk);
-//  });
-//}).on('error', function(e) {
-//  console.log("Got error: " + e.message);
-//});

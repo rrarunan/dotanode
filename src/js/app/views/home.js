@@ -12,6 +12,8 @@ define(function (require) {
 	return Backbone.View.extend({
 
 		render : function () {
+			var $container = $('#content');
+			$container.empty();
 			this.$el.html(template());
 			return this;
 		}

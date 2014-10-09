@@ -1,5 +1,6 @@
 var connect = require('connect');
 var http = require('http');
+var url = require('url');
 
 var apiKey = "";
 
@@ -44,8 +45,10 @@ app.use(urlrouter(function (app) {
 		// live Steam server APIs
 		// get matches for a given user ID
 		//TODO: enhance to take more parameters
-		app.get('/matches/:userId([0-9]+)', function (req, res, next) {
+		app.get('/matches', function (req, res, next) {
 
+			var url_parts = url.parse(req.url, true);
+			var query = url_parts.query;
 			var responseBody = "";
 
 			var getResponse = function (resp) {
@@ -66,9 +69,15 @@ app.use(urlrouter(function (app) {
 				});
 			};
 			console.log("req params:" + JSON.stringify(req.params));
-			http.get("http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v1?key=" + apiKey + "&account_id=" + req.params.userId, getResponse);
-
+			console.log("query:" + JSON.stringify(query));
+			if(req.params.userId != null) {
+				http.get("http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v1?key=" + apiKey + "&account_id=" + req.params.userId, getResponse);
+			} else if(query != null && query.account_id != null) {
+				console.log(query);
+				http.get("http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v1?key=" + apiKey + "&account_id=" + query.account_id, getResponse);
+			}
 		});
+		
 		// get individual match details
 		app.get('/matchdetails/:matchId([0-9]+)', function (req, res, next) {
 			var responseBody = "";
@@ -93,4 +102,4 @@ app.use(urlrouter(function (app) {
 	}));
 
 //create node.js http server and listen on port
-http.createServer(app).listen(8000);
+http.createServer(app).listen(9002);

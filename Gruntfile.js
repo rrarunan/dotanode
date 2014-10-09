@@ -17,7 +17,8 @@ module.exports = function (grunt) {
 				bg : true
 			},
 			runNode : {
-				cmd : 'node src/server/serve.js',
+				//TODO: don't hardcode API key here
+				cmd : 'node src/server/serve.js 42E379CD222A1D2B33E92A1E1816C2C6',
 				bg : true
 			}
 		}

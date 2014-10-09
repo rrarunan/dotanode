@@ -7,6 +7,7 @@ define(function (require) {
 	Backbone = require('backbone/backbone'),
 	tpl = require('text/text!tpl/Heroes.html'),
 	models = require('app/models/hero'),
+	HeroTileItem = require('app/views/heroTileItem'),
 	template = _.template(tpl);
 
 	return Backbone.View.extend({
@@ -33,6 +34,8 @@ define(function (require) {
 			//TODO: backbonify this .. jquerying it for now
 			if (this.heroesCollection != null) {
 				this.heroesCollection.each(function (hero) { // iterate through the collection
+					var heroTile = new HeroTileItem();
+					heroTile.render();
 					var heroesListView = $('.heroesList');
 					if (hero.has('url')) {
 						var heroName = hero.get('url');

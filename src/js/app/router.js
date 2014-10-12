@@ -4,7 +4,9 @@ define(function (require) {
 
 	var $ = require('jquery'),
 	Backbone = require('backbone/backbone'),
-	HomeView = require('app/views/home');
+	HomeView = require('app/views/home'),
+	MatchesView = require('app/views/matches'),
+	MatchDetails = require('app/models/matchDetails');
 
 	var $body = $('body'),
 		homeView = new HomeView({
@@ -16,19 +18,21 @@ define(function (require) {
 			"" : "home",
 			"heroes" : "heroes",
 			"items": "items",
-			"matches": "matchHistory"
+			"matches": "matchHistory",
+			"matches/:id": "matchDetails"
 		},
 
 		home : function () {
 			console.log("Congratulations! You've made it home.");
 			homeView.delegateEvents(); // delegate events when the view is recycled
 			homeView.render();
-		}, //,
+		},
 
 		heroes : function () {
-			homeView.render();
+			if($('#content') == null || $('#content').length === 0) {
+				homeView.render();
+			}
 			require(["app/views/heroes"], function (HeroesView) {
-				console.log("I'm supposed to show heroes");
 				var $container = $('#content');	
 				var view = new HeroesView({
 						el : $container
@@ -43,16 +47,34 @@ define(function (require) {
 		
 		matchHistory: function() {
 			console.log("Show match history for current user");
-			homeView.render();	//TODO: is this needed every time??
-			require(["app/views/matches"], function (MatchesView) {
-				console.log("I'm supposed to show match history here");
-				var $container = $('#content');	
-				var view = new MatchesView({
-						el : $container
-					});
-				view.render();
+			if($('#leftNav') == null || $('#leftNav').length === 0) {
+				homeView.render();
+			}
+			var view = new MatchesView({
+				el : $('#leftNav')
 			});
-		}		
+			view.render();
+		},
+		
+		matchDetails: function(id) {
+			console.log("Show match details for selected match");
+			if($('#matchDetailsContainer') == null || $('#matchDetailsContainer').length === 0) {
+				homeView.render();
+			}
+			//First load match details
+			var currMatch = new MatchDetails({match_id: id});
+			currMatch.fetch(
+				{
+					success: function() {
+						require(["app/views/matchDetails"], function (MatchDetailsView) {
+						var view = new MatchDetailsView({
+							el: $('#matchDetailsContainer')
+						});
+						view.render(currMatch.attributes);
+					});
+				}
+			});
+		}
 		
 	});
 

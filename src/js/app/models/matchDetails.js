@@ -1,4 +1,3 @@
-
 define(function (require) {
 
 	"use strict";
@@ -7,7 +6,11 @@ define(function (require) {
 	Backbone = require('backbone/backbone');
 
 	return Backbone.Model.extend({
-		idAttribute: 'match_id'
+		urlRoot: 'http://localhost:9002/matchdetails',
+		idAttribute: 'match_id',
+		parse: function(response) {
+			return response.result;
+		}
 	});
 
 });

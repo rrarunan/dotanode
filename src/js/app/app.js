@@ -14,11 +14,18 @@ require.config({
 		},
 		'underscore/underscore' : {
 			exports : '_'
+		},
+		'backgrid/lib/backgrid' : {
+			deps : ['underscore/underscore', 'jquery', 'backbone/backbone'],
+			exports : 'Backgrid'		
+		},
+		'mustache/mustache' : {
+			exports : 'Mustache'
 		}
 	}
 });
 
-require(['jquery', 'backbone/backbone', 'app/router', 'flat-ui/dist/js/flat-ui'], function ($, Backbone, Router, FlatUI) {
+require(['backbone/backbone', 'app/router'], function (Backbone, Router) {
 	var router = new Router();
 	Backbone.history.start();
 });

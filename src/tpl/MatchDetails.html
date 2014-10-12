@@ -1,0 +1,32 @@
+<table class="table">
+	 <thead>
+	  <tr>
+        <th>Player</th>
+        <th>Level</th>
+		<th>Hero</th>
+        <th>K/D/A</th>
+		<th>Items</th>
+        <th>Gold</th>
+		<th>Last Hits</th>
+        <th>Denies</th>
+		<th>Gold/Min</th>
+		<th>XP/Min</th>
+      </tr>
+	</thead>
+	<tbody class="matchResults">
+		<% _.each(players, function(player){ %>
+			<tr>
+				<td><%= player.account_id %></td>
+				<td><%= player.level %></td>
+				<td><%= player.hero_id %></td>
+				<td><%= player.kills %>/<%= player.deaths %>/<%= player.assists %></td>
+				<td><%= player.item_0 %>/<%= player.item_1 %>/<%= player.item_2 %>/<%= player.item_3 %>/<%= player.item_4 %>/<%= player.item_5 %></td>
+				<td><%= player.gold %></td>
+				<td><%= player.last_hits %></td>
+				<td><%= player.denies %></td>
+				<td><%= player.gold_per_min %></td>
+				<td><%= player.xp_per_min %></td>
+			</tr>
+		<% });%>
+    </tbody>
+</table>

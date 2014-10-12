@@ -1,7 +1,9 @@
 dotanode
 ========
 
-# DOTA experiments with nodeJS
+# DOTA API experiments
+
+## Using NodeJS, Backbone, FlatUI theme for Bootstrap and AMD/RequireJS Modules
 
 ![Heroes List Screenshot](screens/heroes_list.PNG "Heroes List")
 

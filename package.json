@@ -23,10 +23,11 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-processhtml": "~0.3.3",
     "grunt-prompt": "~0.2.0",
-    "jsonlint": "~1.6.2",
-    "lodash": "~2.4.1",
+    "jsonlint": "^1.6.2",
+    "lodash": "^2.4.1",
     "node-uuid": "~1.4.1",
     "shelljs": "~0.2.6",
+    "split": "^0.3.0",
     "urlrouter": "^0.5.4"
   }
 }

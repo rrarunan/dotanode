@@ -8,6 +8,7 @@ define(function (require) {
 	tpl = require('text/text!tpl/Heroes.html'),
 	models = require('app/models/hero'),
 	HeroTileItem = require('app/views/heroTileItem'),
+	dataMap = require('app/map'),
 	template = _.template(tpl);
 
 	return Backbone.View.extend({
@@ -15,12 +16,7 @@ define(function (require) {
 		//TODO: make this work with dynamic data
 		initialize : function () {
 			var me = this;
-			$.getJSON("../../data/heroes.json", function (data) {
-				var filteredData = _.pick(data, function (value, key, object) {
-						return (key.indexOf('npc_dota_hero') !== -1);
-					});
-				me.setCollection(_.values(filteredData));
-			});
+			me.setCollection(_.values(dataMap.heroRaw));
 		},
 
 		setCollection : function (data) {

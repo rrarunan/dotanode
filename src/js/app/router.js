@@ -43,6 +43,16 @@ define(function (require) {
 		
 		items: function() {
 			console.log("Show items.");
+			if($('#content') == null || $('#content').length === 0) {
+				homeView.render();
+			}
+			require(["app/views/items"], function (ItemsView) {
+				var $container = $('#content');	
+				var view = new ItemsView({
+						el : $container
+					});
+				view.render();
+			});
 		},
 		
 		matchHistory: function() {

@@ -26,6 +26,13 @@ define(function (require) {
 		},
 
 		render : function () {
+			
+			//set heroes to be active nav item
+			$(".nav li").removeClass("active");//this will remove the active class from  
+                                           //previously active menu item 
+			$('a[href="#heroes"]').parent().addClass('active');
+			//clear any home view items
+			$('#homeview').empty();
 			this.$el.html(template());
 			//TODO: backbonify this .. jquerying it for now
 			if (this.heroesCollection != null) {

@@ -21,6 +21,10 @@ require.config({
 		},
 		'mustache/mustache' : {
 			exports : 'Mustache'
+		},
+		'masonry/masonry': {
+			deps: ['jquery', 'jquery-bridget/jquery.bridget'],
+			exports: 'Masonry'
 		}
 	}
 });

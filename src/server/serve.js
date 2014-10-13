@@ -14,6 +14,9 @@ process.argv.forEach(function (val, index, array) {
 	}
 });
 
+//Images, Steam ID (More)
+//http://dev.dota2.com/showthread.php?t=58317
+
 // connect server
 var app = connect();
 
@@ -98,6 +101,33 @@ app.use(urlrouter(function (app) {
 			};
 			console.log("req params:" + JSON.stringify(req.params));
 			http.get("http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1?key=" + apiKey + "&match_id=" + req.params.matchId, getResponse);
+		});
+		
+		app.get('/players', function (req, res, next) {
+			var url_parts = url.parse(req.url, true);
+			var query = url_parts.query;
+			var responseBody = "";
+			
+			var getResponse = function (resp) {
+				console.log("Got response: " + resp.statusCode);
+				var body = "";
+				resp.on('data', function (chunk) {
+					body += chunk;
+					responseBody += chunk;
+				});
+
+				resp.on('end', function () {
+					//res.writeHead(200, "OK", {'Content-Type': 'text/html'});
+					responseObj = JSON.parse(responseBody)
+						res.end(responseBody);
+				});
+			};
+			
+			//DOTA player ID: 28463543
+			//http://localhost:9002/players?steamids=76561197988729271
+			if(query != null && query.steamids != null) {
+				http.get("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002?key=" + apiKey + "&steamids=" + query.steamids, getResponse);
+			}
 		});
 	}));
 

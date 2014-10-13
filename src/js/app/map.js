@@ -10,6 +10,8 @@ define(function (require) {
 	};
 	
 	dataMap.createLUTs = function() {
+	
+		//Parse and set hero lookup
 		if( !_.isEmpty(this.heroRaw) ) {
 			//assume heroes have been populated correctly
 			var heroKeys = _.keys(this.heroRaw);
@@ -74,12 +76,32 @@ define(function (require) {
 					element.mainImg = 'assets/images/heroes/' + heroImg + '.png';
 					//get current key by index (eg. npc_dota_hero_abaddon)
 					element.selImg = 'assets/images/selectionheroes/' + heroKeys[index] + '.png';
+					element.npcName = heroKeys[index];
 				}
 				
 				//Set the hero object to a map of the hero_id
 				if(element.HeroID) {
 					dataMap.heroMap[element.HeroID] = element;
-					console.log("Added hero: " + heroKeys[index] + " to DataMap with Hero ID = " + element.HeroID + JSON.stringify(element));
+					//console.log("Added hero: " + heroKeys[index] + " to DataMap with Hero ID = " + element.HeroID);
+				}
+			});
+		}
+		
+		//Parse and set item lookup
+		if( !_.isEmpty(this.itemRaw) ) {
+			var itemKeys = _.keys(this.itemRaw);
+			var itemVals = _.values(this.itemRaw);
+			
+			_.each( itemVals, function(element, index, list) {
+				var itemKeyArr = itemKeys[index].split('item_');
+				if(itemKeyArr != null && itemKeyArr.length > 1) {
+					var itemName = itemKeyArr[1].toString();
+					//console.log("Item name: " + itemName);
+					element.img = 'assets/images/items/' + itemName + '.png';
+				}
+				//set lookup by item ID
+				if (element.ID) {
+					dataMap.itemMap[element.ID] = element;
 				}
 			});
 		}

@@ -75,6 +75,11 @@ define(function (require) {
 		},
 
 		render : function () {
+			$(".nav li").removeClass("active");//this will remove the active class from  
+                                           //previously active menu item 
+			$('a[href="#matches"]').parent().addClass('active');
+			//clear any home view items
+			$('#homeview').empty();
 			if (this.loadedMatches) {
 				_.each(this.matchCollection.models, function (match) {
 					/*new MatchSummaryItemView({

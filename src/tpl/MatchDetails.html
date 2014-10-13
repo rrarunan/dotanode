@@ -18,9 +18,16 @@
 			<tr>
 				<td><%= player.account_id %></td>
 				<td><%= player.level %></td>
-				<td><%= player.hero_id %></td>
+				<td><img src="<%= player.heroImg %>"></img></td>
 				<td><%= player.kills %>/<%= player.deaths %>/<%= player.assists %></td>
-				<td><%= player.item_0 %>/<%= player.item_1 %>/<%= player.item_2 %>/<%= player.item_3 %>/<%= player.item_4 %>/<%= player.item_5 %></td>
+				<td>
+					<img src="<%= player.itemImgs[0] %>" class="matchDetailsItemImg"></img>
+					<img src="<%= player.itemImgs[1] %>" class="matchDetailsItemImg"></img>
+					<img src="<%= player.itemImgs[2] %>" class="matchDetailsItemImg"></img>
+					<img src="<%= player.itemImgs[3] %>" class="matchDetailsItemImg"></img>
+					<img src="<%= player.itemImgs[4] %>" class="matchDetailsItemImg"></img>
+					<img src="<%= player.itemImgs[5] %>" class="matchDetailsItemImg"></img>
+				</td>
 				<td><%= player.gold %></td>
 				<td><%= player.last_hits %></td>
 				<td><%= player.denies %></td>

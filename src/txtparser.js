@@ -18,6 +18,22 @@ var escapeBackslash = function (str) {
 	return str.replace('\\', '\\\\');
 };
 
+/*
+
+The Dota2 API generally gives you people's SteamIDs as 32-bit numbers.
+
+In order to convert from these 32-bit numbers to Steam Names, you must first convert between the 32-bit ID and 64-bit ID:
+On a system that supports up to 64-bit numbers you can do the following:
+STEAMID64 - 76561197960265728 = STEAMID32
+STEAMID32 + 76561197960265728 = STEAMID64
+OR
+STEAMID32 = The right-most 32-bits of STEAMID64
+STEAMID64 = concatenate("00000001000100000000000000000001", STEAMID32);
+On a system that only supports up to 32-bit numbers - it's trickier. You have to rely on the language's built-in "big number" functions (i.e. PHP's gmp extension: see this post for details)
+Once you have the 64-bit ID, then you can use the GetPlayerSummaries call to get their detail!
+
+*/
+
 //TODO: Fix issues
 // 1- `//` comment lines have snuck in
 // 2- LoadOutScale funky

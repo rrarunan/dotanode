@@ -1,3 +1,10 @@
+<span class="label label-info">
+	<% if (radiant_win == false) {
+		print('Radiant Victory');
+	} else {
+		print('Dire Victory');
+	} %>
+</span>
 <table class="table">
 	 <thead>
 	  <tr>
@@ -14,7 +21,18 @@
       </tr>
 	</thead>
 	<tbody class="matchResults">
-		<% _.each(players, function(player){ %>
+	<% _.each(players, function(player){  %>
+			<tr>
+			<% if (player.player_slot === 0 || player.player_slot === 128) { %>
+			  <td colspan='10'>
+				<% if (player.player_slot === 0) {
+					print('DIRE');
+				} else if (player.player_slot === 128) {
+					print('RADIANT');
+				} %>
+			  </td> 
+			<% } %>
+		    </tr>
 			<tr>
 				<td><%= player.account_id %></td>
 				<td><%= player.level %></td>
@@ -34,6 +52,6 @@
 				<td><%= player.gold_per_min %></td>
 				<td><%= player.xp_per_min %></td>
 			</tr>
-		<% });%>
+	<% });%>
     </tbody>
 </table>

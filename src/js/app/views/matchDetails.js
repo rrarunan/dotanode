@@ -31,6 +31,9 @@ define(function (require) {
 		render : function (matchDetails) {
 			var players = matchDetails.players;
 			var me = this;
+			var steamIds = [];
+			var steamId32to64Map = {};
+			var steamId64to32Map = {};
 			_.each(players, function(player){
 				var currHero = dataMap.heroMap[player.hero_id];
 				//Player Account ID: 4294967295 -> Set to Private
@@ -47,14 +50,36 @@ define(function (require) {
 				Once you have the 64-bit ID, then you can use the GetPlayerSummaries call to get their detail!
 				*/
 				//console.log("setting hero img for ->" +  player.hero_id + ":" + currHero.npcName + "=" + currHero.miniImg);
-				//Don't know why biginteger returns me a wrong number yet (so using a number less than correct one)
-				var a = new BigNumber("76561197960265728");
-				var b = new BigNumber(player.account_id);
-				console.log( "Player Steam ID = " + a.add(b).toString() );
+				if (player.account_id !== 4294967295) {
+					var STEAM_DEFAULT = new BigNumber("76561197960265728");
+					var STEAMID32 = new BigNumber(player.account_id);
+					var STEAMID64 = STEAM_DEFAULT.add(STEAMID32).toString();
+					steamIds.push(STEAMID64);
+					steamId64to32Map[STEAMID64] = STEAMID32;
+					console.log( "Player Steam ID = " + STEAMID64 );
+				}
 				player.heroImg = currHero.miniImg;
 				player.itemImgs = me.getItems([player.item_0, player.item_1, player.item_2, player.item_3, player.item_4, player.item_5]);
 			});
-			me.$el.html(template(matchDetails));
+			//[TODO:]Constantify the URLs
+			var playersJson = $.get('http://localhost:9002/players?steamids=' + steamIds.toString(),
+			function(data) {
+				var playersInfo = data.response.players;
+				var playersData = {};
+				if(playersInfo) {
+					_.each(playersInfo, function(playerInfo) {
+						if(playerInfo.steamid != null) {
+							var steam32ID = steamId64to32Map[playerInfo.steamid]
+							if (steam32ID != null) {
+								playersData[steam32ID] = playerInfo;
+							}
+						}
+					});
+				}
+				matchDetails.playersData = playersData;
+				me.$el.html(template(matchDetails));
+				//console.log("Players\n" + JSON.stringify(data));
+			}, "json");
 			return me;
 		}
 

@@ -34,7 +34,11 @@
 			<% } %>
 		    </tr>
 			<tr>
-				<td><%= player.account_id %></td>
+				<% if( playersData[player.account_id] != null) { %>
+					<td><%= playersData[player.account_id].personaname %></td>
+				<% } else { %>
+					<td> Private </td> 
+				<% } //TODO: also add BOT check%>
 				<td><%= player.level %></td>
 				<td><img src="<%= player.heroImg %>"></img></td>
 				<td><%= player.kills %>/<%= player.deaths %>/<%= player.assists %></td>

@@ -25,6 +25,9 @@ require.config({
 		'masonry/masonry': {
 			deps: ['jquery', 'jquery-bridget/jquery.bridget'],
 			exports: 'Masonry'
+		},
+		'bignumber': {
+			exports: 'BigNumber'
 		}
 	}
 });

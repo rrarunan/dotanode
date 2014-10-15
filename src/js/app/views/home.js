@@ -45,7 +45,6 @@ define(function (require) {
 			.fail(function () {
 				console.log('One of our loads failed');
 			});
-
 		},
 
 		render: function () {

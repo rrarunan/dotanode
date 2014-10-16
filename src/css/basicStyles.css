@@ -1,6 +1,7 @@
 .matchDetailsItemImg {
 	height: 32px;
 	width: 62px;
+	padding-right: -24px;
 }
 
 .scrollable-menu {
@@ -10,5 +11,5 @@
 }
 
 .item {
-	width: 25%;
+	width: 2%;
 }

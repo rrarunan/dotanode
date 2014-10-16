@@ -6,7 +6,8 @@ require.config({
 		app : '../js/app',
 		tpl : '../tpl',
 		/* path to folder where individual bootstrap files have been saved. (affix.js, alert.js, etc) */
-        bootstrap: '../lib/bootstrap/js'
+        bootstrap: '../lib/bootstrap/js',
+		imagesloaded: '../lib/imagesloaded'
 	},
 
 	shim : {
@@ -16,10 +17,6 @@ require.config({
 		},
 		'underscore/underscore' : {
 			exports : '_'
-		},
-		'backgrid/lib/backgrid' : {
-			deps : ['underscore/underscore', 'jquery', 'backbone/backbone'],
-			exports : 'Backgrid'		
 		},
 		'mustache/mustache' : {
 			exports : 'Mustache'
@@ -34,6 +31,9 @@ require.config({
 		'bootstrap/dropdown': {
 			deps: ['jquery'],
 			exports: '$.fn.dropdown'
+		},
+		'imagesloaded/imagesloaded': {
+			exports: 'ImagesLoaded'
 		}
 	}
 });

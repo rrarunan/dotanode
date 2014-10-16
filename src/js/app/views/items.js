@@ -8,6 +8,7 @@ define(function (require) {
 	Masonry = require('masonry/masonry'),
 	tpl = require('text/text!tpl/Items.html'),
 	models = require('app/models/item'),
+	ImagesLoaded = require('imagesloaded/imagesloaded'),
 	dataMap = require('app/map'),
 	template = _.template(tpl);
 
@@ -21,7 +22,7 @@ define(function (require) {
 
 		setCollection : function (data) {
 			console.log(data);
-			this.temsCollection = new models.ItemCollection(data);
+			this.itemsCollection = new models.ItemCollection(data);
 			this.render();
 		},
 
@@ -34,12 +35,15 @@ define(function (require) {
 			//clear any home view items
 			$('#homeview').empty();
 
-			this.$el.html(template());
-			var $container = $('#content');
-			$container.Masonry({
-			  // options
-			  columnWidth: 200,
-			  itemSelector: '.item'
+			this.$el.html(template(this.itemsCollection));
+			
+			var $container = $('#itemsContainer');
+			$container.imagesLoaded( function() {
+				$container.masonry({
+				  // options
+				  columnWidth: 124,
+				  itemSelector: '.item'
+				});
 			});
 			return this;
 		}

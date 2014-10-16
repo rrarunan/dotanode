@@ -1,7 +1,9 @@
 <div id="itemsContainer">
-	<% _.each(models, function(dotaItem) { %>
-		<div class="item">
-			<img src="<%= dotaItem.attributes.img %>"></img>
-		</div>
+	<% _.each(models, function(dotaItem) {
+		if (dotaItem.attributes.ItemAliases != null && dotaItem.attributes.ItemRecipe == null) {  %>
+			<div class="item">
+				<img src="<%= dotaItem.attributes.img %>"></img>
+			</div>
+		<%}%>
 	<% }); %>
 </div>

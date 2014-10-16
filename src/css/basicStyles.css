@@ -2,3 +2,13 @@
 	height: 32px;
 	width: 62px;
 }
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+.item {
+	width: 25%;
+}

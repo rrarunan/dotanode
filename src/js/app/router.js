@@ -57,11 +57,11 @@ define(function (require) {
 		
 		matchHistory: function() {
 			console.log("Show match history for current user");
-			if($('#leftNav') == null || $('#leftNav').length === 0) {
+			if($('#content') == null || $('#content').length === 0) {
 				homeView.render();
 			}
 			var view = new MatchesView({
-				el : $('#leftNav')
+				el : $('#content')
 			});
 			view.render();
 		},

@@ -4,7 +4,9 @@ require.config({
 
 	paths : {
 		app : '../js/app',
-		tpl : '../tpl'
+		tpl : '../tpl',
+		/* path to folder where individual bootstrap files have been saved. (affix.js, alert.js, etc) */
+        bootstrap: '../lib/bootstrap/js'
 	},
 
 	shim : {
@@ -28,6 +30,10 @@ require.config({
 		},
 		'bignumber': {
 			exports: 'BigNumber'
+		},
+		'bootstrap/dropdown': {
+			deps: ['jquery'],
+			exports: '$.fn.dropdown'
 		}
 	}
 });

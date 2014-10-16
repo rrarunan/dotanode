@@ -33,10 +33,14 @@ define(function (require) {
 			$('a[href="#items"]').parent().addClass('active');
 			//clear any home view items
 			$('#homeview').empty();
+
 			this.$el.html(template());
-			//TODO: backbonify this .. jquerying it for now
-			if (this.itemsCollection != null) {
-			}
+			var $container = $('#content');
+			$container.Masonry({
+			  // options
+			  columnWidth: 200,
+			  itemSelector: '.item'
+			});
 			return this;
 		}
 

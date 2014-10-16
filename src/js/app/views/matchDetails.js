@@ -29,6 +29,9 @@ define(function (require) {
 
 		//model is being passed down from router
 		render : function (matchDetails) {
+		
+			$('#homeview').empty();
+			
 			var players = matchDetails.players;
 			var me = this;
 			var steamIds = [];
@@ -76,6 +79,12 @@ define(function (require) {
 						}
 					});
 				}
+				var secsToMins = function secondsToMins(secs) {
+				  var minutes = Math.floor(secs / 60);
+				  var seconds = ((secs % 60) / 10).toFixed(0);
+				  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+				};
+				matchDetails.matchDuration = secsToMins(matchDetails.duration);
 				matchDetails.playersData = playersData;
 				me.$el.html(template(matchDetails));
 				//console.log("Players\n" + JSON.stringify(data));

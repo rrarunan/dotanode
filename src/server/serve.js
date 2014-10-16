@@ -66,17 +66,12 @@ app.use(urlrouter(function (app) {
 				resp.on('end', function () {
 					//res.writeHead(200, "OK", {'Content-Type': 'text/html'});
 					responseObj = JSON.parse(responseBody)
-						//console.log("Got response: ", responseObj);
-						//console.log(responseBody);
 						res.end(responseBody);
 				});
 			};
-			console.log("req params:" + JSON.stringify(req.params));
-			console.log("query:" + JSON.stringify(query));
 			if(req.params.userId != null) {
 				http.get("http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v1?key=" + apiKey + "&account_id=" + req.params.userId, getResponse);
 			} else if(query != null && query.account_id != null) {
-				console.log(query);
 				http.get("http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v1?key=" + apiKey + "&account_id=" + query.account_id, getResponse);
 			}
 		});
@@ -94,7 +89,6 @@ app.use(urlrouter(function (app) {
 				});
 
 				resp.on('end', function () {
-					//res.writeHead(200, "OK", {'Content-Type': 'text/html'});
 					responseObj = JSON.parse(responseBody)
 						res.end(responseBody);
 				});
@@ -117,7 +111,6 @@ app.use(urlrouter(function (app) {
 				});
 
 				resp.on('end', function () {
-					//res.writeHead(200, "OK", {'Content-Type': 'text/html'});
 					responseObj = JSON.parse(responseBody)
 						res.end(responseBody);
 				});

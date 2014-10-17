@@ -6,7 +6,8 @@ define(function (require) {
 	Backbone = require('backbone/backbone'),
 	HomeView = require('app/views/home'),
 	MatchesView = require('app/views/matches'),
-	MatchDetails = require('app/models/matchDetails');
+	MatchDetails = require('app/models/matchDetails'),
+	PlayerStatsView = require('app/views/playerStats');
 
 	var $body = $('body'),
 		homeView = new HomeView({
@@ -19,7 +20,8 @@ define(function (require) {
 			"heroes" : "heroes",
 			"items": "items",
 			"matches": "matchHistory",
-			"matches/:id": "matchDetails"
+			"matches/:id": "matchDetails",
+			"playerStats": "playerStats"
 		},
 
 		home : function () {
@@ -84,6 +86,16 @@ define(function (require) {
 					});
 				}
 			});
+		},
+		
+		playerStats: function() {
+			if($('#content') == null || $('#content').length === 0) {
+				homeView.render();
+			}
+			var view = new PlayerStatsView({
+				el: $('#content')
+			});
+			view.render();
 		}
 		
 	});

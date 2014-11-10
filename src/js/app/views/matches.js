@@ -46,6 +46,7 @@ define(function (require) {
 
 			if (this.loadedMatches) {
 				this.$el.html(template());
+				//Change this to a selector based on time(date)
 				var $leftNav = $("#leftNav");
 				if($leftNav) {
 					_.each(this.matchCollection.models, function (match) {

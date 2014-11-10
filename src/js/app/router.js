@@ -24,6 +24,7 @@ define(function (require) {
 			"playerStats": "playerStats"
 		},
 
+		//TODO: refactor actions on routers to controller objects
 		home : function () {
 			console.log("Congratulations! You've made it home.");
 			homeView.delegateEvents(); // delegate events when the view is recycled

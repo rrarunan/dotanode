@@ -41,10 +41,17 @@ define(function (require) {
 			$container.imagesLoaded( function() {
 				$container.masonry({
 				  // options
-				  columnWidth: 124,
+				  columnWidth: 10,
 				  itemSelector: '.item'
 				});
 			});
+
+			$container.on( 'mouseover', '.item', function() {
+    			// change size of item by toggling gigante class
+    			//$( this ).toggleClass('gigante');
+    			//$container.isotope('layout');
+  			});
+
 			return this;
 		}
 

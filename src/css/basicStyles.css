@@ -5,11 +5,17 @@
 }
 
 .scrollable-menu {
-    height: auto;
-    max-height: 200px;
-    overflow-x: hidden;
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
 }
 
 .item {
-	width: 2%;
+	margin: 2px 0px 2px 4px;
+}
+
+.item:hover {
+  background: #8CF;
+  opacity: 0.8;
+  cursor: pointer;
 }

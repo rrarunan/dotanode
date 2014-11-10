@@ -97,7 +97,7 @@ define(function (require) {
 				if(itemKeyArr != null && itemKeyArr.length > 1) {
 					var itemName = itemKeyArr[1].toString();
 					//console.log("Item name: " + itemName);
-					element.img = 'assets/images/items/' + itemName + '.png';
+					element.img = 'assets/croppedImages/items/' + itemName + '.png';
 				}
 				//set lookup by item ID
 				if (element.ID) {
